@@ -1,5 +1,10 @@
 # Desarrollo del Taller Práctico #1: EcoMarket
 
+## Integrantes:
+
+- [Deibi Bastidas Cerón]
+- [Camilo Arciniegas Forero]
+
 ## Fase 1: Selección y Justificación del Modelo de IA
 
 ### 1. Tipo de modelo de IA generativa adecuado
