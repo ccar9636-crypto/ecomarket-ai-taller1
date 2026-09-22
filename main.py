@@ -26,7 +26,7 @@ def consultar_llm(prompt):
             prompt,
             generation_config=genai.types.GenerationConfig(
                 temperature=0.5,
-                max_output_tokens=300,
+                max_output_tokens=1024,
             )
         )
         return response.text.strip()
