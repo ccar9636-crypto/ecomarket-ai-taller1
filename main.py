@@ -1,43 +1,38 @@
 import json
 import os
 import requests
-
+import google.generativeai as genai
 # Cargar base de datos simulada de pedidos
 def cargar_base_datos():
     path = os.path.join("database", "mock_orders.json")
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-# Función para consultar a un LLM usando Hugging Face Inference API
+# Función para consultar a un LLM usando la SDK oficial de Google Gemini
 def consultar_llm(prompt):
-    # Usaremos Mistral-7B-Instruct como modelo open-source gratuito
-    model_id = "mistralai/Mistral-7B-Instruct-v0.2"
-    url = f"https://api-inference.huggingface.co/models/{model_id}"
-    
-    # Obtener el token desde las variables de entorno
-    token = os.getenv("HF_TOKEN")
-    if not token:
-        return "ERROR: No se encontró el token de Hugging Face. Asegúrate de configurar la variable de entorno HF_TOKEN."
-    
-    headers = {"Authorization": f"Bearer {token}"}
-    
-    # Formato de instrucción típico para modelos Mistral
-    payload = {
-        "inputs": f"<s>[INST] {prompt} [/INST]",
-        "parameters": {
-            "max_new_tokens": 300,
-            "temperature": 0.5,
-            "return_full_text": False
-        }
-    }
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        return "ERROR: No se encontró el API Key de Gemini. Asegúrate de configurar la variable de entorno GEMINI_API_KEY."
     
     try:
-        response = requests.post(url, headers=headers, json=payload)
-        response.raise_for_status()
-        result = response.json()
-        return result[0]['generated_text'].strip()
+        # Configurar la llave
+        genai.configure(api_key=api_key)
+        
+        # Instanciar el modelo oficial recomendado por Google
+        model = genai.GenerativeModel("gemini-3.6-flash")
+        
+        # Generar contenido
+        response = model.generate_content(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
+                temperature=0.5,
+                max_output_tokens=300,
+            )
+        )
+        return response.text.strip()
     except Exception as e:
-        return f"Error al consultar el LLM: {e}"
+        return f"Error al consultar Gemini: {e}"
+
 
 # Ejercicio 1: Prompt de Solicitud de Pedido con Contexto Integrado
 def generar_prompt_estado_pedido(tracking_number, db_pedidos):
@@ -99,7 +94,7 @@ if __name__ == "__main__":
     print("=== PRUEBA EJERCICIO 1: Estado de Pedido (Retrasado) ===" )
     prompt_p1 = generar_prompt_estado_pedido("ECO-1003", db)
     print("-> Prompt generado:\n", prompt_p1)
-    print("\n-> Respuesta del LLM (Mistral):")
+    print("\n-> Respuesta del LLM (Gemini):")
     print(consultar_llm(prompt_p1))
     
     print("\n" + "="*50 + "\n")
@@ -111,5 +106,5 @@ if __name__ == "__main__":
         motivo="El cliente cambió de opinión tras abrir el empaque."
     )
     print("-> Prompt generado:\n", prompt_p2)
-    print("\n-> Respuesta del LLM (Mistral):")
+    print("\n-> Respuesta del LLM (Gemini):")
     print(consultar_llm(prompt_p2))

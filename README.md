@@ -64,25 +64,25 @@ Específicamente, se propone el uso de un modelo *open-source* eficiente como **
 
 ## Fase 3: Aplicación de la Ingeniería de Prompts
 
-Para esta fase, se ha desarrollado un script en Python (`main.py`) que genera prompts estructurados y se conecta a la API de **Hugging Face** para obtener respuestas reales utilizando el modelo `Mistral-7B-Instruct-v0.2`.
+Para esta fase, se ha desarrollado un script en Python (`main.py`) que genera prompts estructurados y se conecta a la API de **Google Gemini** para obtener respuestas reales utilizando el modelo `gemini-1.5-flash`.
 
 ### Instrucciones de Ejecución
 
 1. **Instalar dependencias:**
-   Asegúrate de tener instalada la librería `requests`:
+   Asegúrate de tener instalada la librería oficial de Google:
    ```bash
-   pip install requests
+   pip install -r requirements.txt
    ```
 
-2. **Configurar el Token de Hugging Face:**
-   Debes configurar tu token de acceso de Hugging Face como una variable de entorno llamada `HF_TOKEN`.
+2. **Configurar el API Key de Google Gemini:**
+   Debes configurar tu API Key de Gemini como una variable de entorno llamada `GEMINI_API_KEY`.
    - En Mac/Linux (Terminal):
      ```bash
-     export HF_TOKEN="tu_token_aqui"
+     export GEMINI_API_KEY="tu_api_key_aqui"
      ```
    - En Windows (PowerShell):
      ```powershell
-     $env:HF_TOKEN="tu_token_aqui"
+     $env:GEMINI_API_KEY="tu_api_key_aqui"
      ```
 
 3. **Ejecutar el script:**
