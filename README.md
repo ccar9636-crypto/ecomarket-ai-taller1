@@ -59,3 +59,34 @@ Específicamente, se propone el uso de un modelo *open-source* eficiente como **
 - **Privacidad de datos:** El manejo de PII (*Personally Identifiable Information*), como direcciones, nombres e historiales de compra, requiere medidas de protección adecuadas, incluyendo cifrado en tránsito y en reposo. También debe establecerse una política clara sobre el uso de los datos y evitar que la información de los clientes sea utilizada para entrenar modelos públicos de terceros sin autorización.
 
 - **Impacto laboral:** El objetivo estratégico de EcoMarket **no es reemplazar al personal de atención al cliente, sino potenciarlo**. La automatización permitiría transformar el rol de los agentes, pasando de atender consultas repetitivas a gestionar casos complejos, resolver conflictos y supervisar la calidad de las respuestas generadas por la IA.
+
+---
+
+## Fase 3: Aplicación de la Ingeniería de Prompts
+
+Para esta fase, se ha desarrollado un script en Python (`main.py`) que genera prompts estructurados y se conecta a la API de **Hugging Face** para obtener respuestas reales utilizando el modelo `Mistral-7B-Instruct-v0.2`.
+
+### Instrucciones de Ejecución
+
+1. **Instalar dependencias:**
+   Asegúrate de tener instalada la librería `requests`:
+   ```bash
+   pip install requests
+   ```
+
+2. **Configurar el Token de Hugging Face:**
+   Debes configurar tu token de acceso de Hugging Face como una variable de entorno llamada `HF_TOKEN`.
+   - En Mac/Linux (Terminal):
+     ```bash
+     export HF_TOKEN="tu_token_aqui"
+     ```
+   - En Windows (PowerShell):
+     ```powershell
+     $env:HF_TOKEN="tu_token_aqui"
+     ```
+
+3. **Ejecutar el script:**
+   Una vez configurado el token y las dependencias, corre el script principal para ver los prompts generados y las respuestas del modelo:
+   ```bash
+   python main.py
+   ```
