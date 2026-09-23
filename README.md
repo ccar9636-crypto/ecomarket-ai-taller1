@@ -64,29 +64,34 @@ Específicamente, se propone el uso de un modelo *open-source* eficiente como **
 
 ## Fase 3: Aplicación de la Ingeniería de Prompts
 
-Para esta fase, se ha desarrollado un script en Python (`main.py`) que genera prompts estructurados y se conecta a la API de **Google Gemini** para obtener respuestas reales utilizando el modelo `gemini-1.5-flash`.
+Para esta fase, se ha desarrollado un script en Python (`main.py`) que genera prompts estructurados y se conecta a la API de **Groq** para obtener respuestas en tiempo real con alta velocidad y tolerancia a límites de cuota (*rate-limits*).
+
+### Características Técnicas del Script (`main.py`):
+- **Estructuración de Contexto (Ejercicio 1):** Inyecta una base de datos ficticia de pedidos (`mock_orders.json`) en el prompt para comparar un prompt básico vs. un prompt optimizado (con delimitadores, rol de sistema y restricciones de tono).
+- **Manejo de Políticas y Restricciones (Ejercicio 2):** Implementa un evaluador de devoluciones respetando normativas de higiene personal y proponiendo alternativas de compensación (bonos o notas de crédito).
+- **Estrategia Multimodelo y Fallback Automático:** Cuenta con una lista priorizada de modelos open-source (`llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `qwen/qwen3.8-27b`, `openai/gpt-oss-20b`) y un mecanismo de auto-descubrimiento dinámico de modelos de texto activos vía API si alguno queda fuera de servicio (*decommissioned*).
 
 ### Instrucciones de Ejecución
 
 1. **Instalar dependencias:**
-   Asegúrate de tener instalada la librería oficial de Google:
+   Asegúrate de instalar las librerías necesarias:
    ```bash
    pip install -r requirements.txt
    ```
 
-2. **Configurar el API Key de Google Gemini:**
-   Debes configurar tu API Key de Gemini como una variable de entorno llamada `GEMINI_API_KEY`.
+2. **Configurar el API Key de Groq:**
+   Obtén una clave API gratuita en [Groq Cloud Console](https://console.groq.com) y configúrala como variable de entorno:
    - En Mac/Linux (Terminal):
      ```bash
-     export GEMINI_API_KEY="tu_api_key_aqui"
+     export GROQ_API_KEY="tu_groq_api_key_aqui"
      ```
    - En Windows (PowerShell):
      ```powershell
-     $env:GEMINI_API_KEY="tu_api_key_aqui"
+     $env:GROQ_API_KEY="tu_groq_api_key_aqui"
      ```
 
 3. **Ejecutar el script:**
-   Una vez configurado el token y las dependencias, corre el script principal para ver los prompts generados y las respuestas del modelo:
+   Una vez configurada la clave API y las dependencias, ejecuta el script principal para ver las comparativas de prompts y las respuestas del modelo:
    ```bash
    python main.py
    ```
